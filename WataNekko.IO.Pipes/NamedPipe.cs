@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 namespace WataNekko.IO.Pipes
 {
     /// <summary>
-    /// Base class for <see cref="NamedPipeServer"/> and <see cref="NamedPipeClient"/>
+    /// Base class for <see cref="NamedPipeServer"/> and <see cref="NamedPipeClient"/>.
     /// </summary>
     public abstract class NamedPipe
     {
         // ---------- Default values ---------- //
-        /// <value>1024</value>
         protected const int defaultBufferSize = 1024;
-        /// <value><c>true</c></value>
         private const bool defaultOverwriteBufferDataWhenFull = true;
         /// <summary>
         /// Represents the direction of the pipe of a <see cref="NamedPipe"/> object.
@@ -24,7 +22,6 @@ namespace WataNekko.IO.Pipes
         /// Represents the pipe creation options of a <see cref="NamedPipe"/> object.
         /// </summary>
         public const PipeOptions Options = PipeOptions.Asynchronous;
-        /// <value>100</value>
         private const int defaultWriteTimeout = 100;
 
         // ---------- Members ---------- //
@@ -63,7 +60,7 @@ namespace WataNekko.IO.Pipes
         /// Gets or sets the name of the pipe.
         /// </summary>
         /// <remarks>
-        /// Changes are only applied after <see cref="ConnectAsync"/> successfully returns.
+        /// Changes are only applied after <see cref="ConnectAsync()"/> successfully returns.
         /// </remarks>
         public string PipeName { get; set; }
 
@@ -73,7 +70,7 @@ namespace WataNekko.IO.Pipes
         /// <remarks>
         /// Attempts to change the size when the pipe is connected will result in an exception.
         /// </remarks>
-        /// <value>The size in bytes of the input buffer. The default is <inheritdoc cref="defaultBufferSize"/>.</value>
+        /// <value>The size in bytes of the input buffer. The default is 1024.</value>
         /// <exception cref="InvalidOperationException">The pipe is connected.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The <see cref="InBufferSize"/> value is less than or equal to zero.</exception>
         public int InBufferSize
@@ -91,7 +88,7 @@ namespace WataNekko.IO.Pipes
                 }
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("Buffer size must be positive.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Buffer size must be positive.");
                 }
 
                 _inBuffer = new byte[value];
@@ -111,7 +108,7 @@ namespace WataNekko.IO.Pipes
         /// When set to true, oldest unread data will be lost if new data is available. Default value is true.
         /// Attempts to change this when the pipe is connected will result in an exception.
         /// </remarks>
-        /// <value>A <see cref="bool"/> indicating whether new data should overwrite oldest data when the buffer is full. The default is <inheritdoc cref="defaultOverwriteBufferDataWhenFull"/></value>
+        /// <value>A <see cref="bool"/> indicating whether new data should overwrite oldest data when the buffer is full. The default is <c>true</c>.</value>
         /// <exception cref="InvalidOperationException">The pipe is connected.</exception>
         public bool OverwriteBufferDataWhenFull
         {
@@ -143,7 +140,7 @@ namespace WataNekko.IO.Pipes
         /// It is possible but not recommended to set the timeout to <see cref="Timeout.Infinite">Infinite</see>
         /// as the <see cref="Write"/> method can block other operations until it finishes or times out.
         /// </remarks>
-        /// <value>The number of milliseconds before a time-out occurs. The default is <inheritdoc cref="defaultWriteTimeout"/>.</value>
+        /// <value>The number of milliseconds before a time-out occurs. The default is 100.</value>
         /// <exception cref="InvalidOperationException">The pipe is connected.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The <see cref="WriteTimeout"/> value is less than zero and not equal to <see cref="Timeout.Infinite">Infinite</see>.</exception>
         public int WriteTimeout
@@ -157,7 +154,7 @@ namespace WataNekko.IO.Pipes
                 }
                 if (value < 0 && value != Timeout.Infinite)
                 {
-                    throw new ArgumentOutOfRangeException("Timeout must be non-negative or equal to Timeout.Infinite");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Timeout must be non-negative or equal to Timeout.Infinite");
                 }
 
                 _writeTimeout = value;
@@ -583,9 +580,9 @@ namespace WataNekko.IO.Pipes
         }
 
         // ---------- Exceptions ---------- //
-        protected const string EX_PIPE_NOT_CONNECTED = "Pipe is not connected.";
+        private const string EX_PIPE_NOT_CONNECTED = "Pipe is not connected.";
 
-        protected void ThrowIfPipeNotConnected()
+        private void ThrowIfPipeNotConnected()
         {
             if (!IsConnected)
             {
@@ -593,7 +590,7 @@ namespace WataNekko.IO.Pipes
             }
         }
 
-        protected void ThrowIfInvalidArgument(byte[] buffer, int offset, int count)
+        private void ThrowIfInvalidArgument(byte[] buffer, int offset, int count)
         {
             if (buffer is null)
             {

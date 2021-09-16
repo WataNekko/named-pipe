@@ -6,7 +6,7 @@ namespace WataNekko.IO.Pipes
     internal static class ExtensionMethods
     {
         /// <summary>
-        /// Implements a <see cref="CancellationToken"/> in addition to the <see cref="PipeStream.Read"/> method.
+        /// Implements a <see cref="CancellationToken"/> in addition to the <see cref="PipeStream.Read(byte[], int, int)"/> method.
         /// </summary>
         public static int Read(this PipeStream pipeStream, byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {

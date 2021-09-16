@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Users\Jackygunter\Documents\GitHub\named-pipe\WataNekko.IO.Pipes\WataNekko.IO.Pipes.xml</DocumentationFile>
+  </PropertyGroup>
+
 </Project>

@@ -5,14 +5,12 @@ using System.Threading.Tasks;
 namespace WataNekko.IO.Pipes
 {
     /// <summary>
-    /// Represents a named pipe server
+    /// Represents a named pipe server.
     /// </summary>
     public sealed class NamedPipeServer : NamedPipe
     {
         // ---------- Default values ---------- //
-        /// <value>1</value>
         private const int defaultMaxNumberOfServerInstances = 1;
-        /// <value><see cref="PipeTransmissionMode.Byte"/></value>
         private const PipeTransmissionMode defaultTransmissionMode = PipeTransmissionMode.Byte;
 
         // ---------- Properties ---------- //
@@ -20,11 +18,11 @@ namespace WataNekko.IO.Pipes
         /// Gets or sets a value representing the maximum number of server instances that can share the same name.
         /// </summary>
         /// <remarks>
-        /// Changes are only applied after <see cref="NamedPipe.ConnectAsync"/> successfully returns.
+        /// Changes are only applied after <see cref="NamedPipe.ConnectAsync()"/> successfully returns.
         /// </remarks>
         /// <value>
-        /// An <see cref="Int32"/> representing the maximum number of server instances that can share the same name.
-        /// This value can be <see cref="NamedPipeServerStream.MaxAllowedServerInstances">MaxAllowedServerInstances</see>. The default is <inheritdoc cref="defaultMaxNumberOfServerInstances"/>.
+        /// A <see cref="int"/> representing the maximum number of server instances that can share the same name.
+        /// This value can be <see cref="NamedPipeServerStream.MaxAllowedServerInstances">MaxAllowedServerInstances</see>. The default is 1.
         /// </value>
         public int MaxNumberOfServerInstances { get; set; } = defaultMaxNumberOfServerInstances;
 
@@ -32,9 +30,9 @@ namespace WataNekko.IO.Pipes
         /// Gets or sets the enum value specifying the transmission mode of the pipe.
         /// </summary>
         /// <remarks>
-        /// Changes are only applied after <see cref="NamedPipe.ConnectAsync"/> successfully returns.
+        /// Changes are only applied after <see cref="NamedPipe.ConnectAsync()"/> successfully returns.
         /// </remarks>
-        /// <value>A <see cref="PipeTransmissionMode"/> value. The default is <inheritdoc cref="defaultTransmissionMode"/></value>
+        /// <value>A <see cref="PipeTransmissionMode"/> value. The default is <see cref="PipeTransmissionMode.Byte"/>.</value>
         public PipeTransmissionMode TransmissionMode { get; set; } = defaultTransmissionMode;
 
         // ---------- Constructor ---------- //
